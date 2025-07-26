@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  .container.mt-4 
+    h1 Asset Master
+    
+    form.mb-4(action="/asset" method="get")
+       .row 
+       .col-md-4
+          a.btn.btn-success.mt-0(href="/asset/add") Add New Asset
+      .row(style='padding-bottom: 8px!important;')
+        .col-md-4
+          label.form-label Filter by Category:
+          select.form-select(name="assetcategory")
+            option(value="") All Categories
+            each category in categories
+              option(value=category.name selected=(assetCategory == category.name))= category.name
+
+        .col-md-4(style='padding-top: 8px!important;')
+          button.btn.btn-primary.mt-4(type="submit") Apply Filters
+        
+    table#assetTable.table.table-striped.table-bordered(style='padding-top: 8px!important;')
+      thead
+        tr
+          th(style='width: 5%; white-space: nowrap') S No.
+          th(style='width: 15%; white-space: nowrap') Serial No.
+          th(style='width: 20%; white-space: nowrap') Make
+          th(style='width: 10%; white-space: nowrap') Model
+          th(style='width: 10%; white-space: nowrap') Category
+          th(style='width: 10%; white-space: nowrap') Status
+          th(style='width: 15%; white-space: nowrap') Actions
+      tbody
+        each asset,index in assets
+          tr
+            td= index + 1
+            td= asset.serial_number
+            td= asset.make
+            td= asset.model
+            td= asset.asset_type
+            td= asset.status
+            td
+            
+              a.btn.btn-primary.btn-sm(href='/asset/edit/' + asset.id)(style='margin: 2px;') Edit
+              a.btn.btn-danger.btn-sm(href='/asset/delete/' + asset.id, onclick='return confirm("Are you sure?")')(style='margin: 2px;') Delete
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+  script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function () {
+      $('#assetTable').DataTable();
+    });
+

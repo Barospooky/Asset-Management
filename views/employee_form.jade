@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .container
+    h2 #{action} Employee
+
+    form(method='POST', action=(action === 'Add' ? '/employee/add' : '/employee/edit/' + employee.id))
+      .mb-3
+        label.form-label(for='name') Name
+        input.form-control(type='text', name='name', required, value=employee.name || '')
+      
+      .mb-3
+        label.form-label(for='email') Email
+        input.form-control(type='email', name='email', required, value=employee.email || '')
+      
+      .mb-3
+        label.form-label(for='status') Status
+        select.form-select(name='status')
+          option(value='active', selected=employee.status === 'active') active
+          option(value='inactive', selected=employee.status === 'inactive') inactive
+      
+      .mb-3
+        label.form-label(for='join_date') Join Date
+        input.form-control(type='date', name='join_date', placeholder='dd/mm/yyyy', value=(employee.join_date || ''))
+      
+      .mb-3
+        label.form-label(for='leave_date') Leave Date
+        input.form-control(type='date', name='leave_date', placeholder='dd/mm/yyyy', value=(employee.leave_date || ''))
+
+      button.btn.btn-success(type='submit')(style='margin: 2px;') Save
+      a.btn.btn-secondary(href='/employee')(style='margin: 2px;') Cancel

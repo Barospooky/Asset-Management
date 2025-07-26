@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .container
+    h2 #{action} Asset
+    if error
+      .alert.alert-danger= error
+    form(method="POST" action=`/asset/${action === 'Add' ? 'add' : 'edit/' + (asset ? asset.id : '')}`)
+      .mb-3
+        label.form-label Serial Number
+        input.form-control(type="text" name="serial_number" value=asset ? asset.serial_number : '' required)
+      .mb-3
+        label.form-label Make
+        input.form-control(type="text" name="make" value=asset ? asset.make : '' required)
+      .mb-3
+        label.form-label Model
+        input.form-control(type="text" name="model" value=asset ? asset.model : '' required)
+      .mb-3
+        label.form-label Category
+        select.form-select(name="asset_type" required)
+          option(value="Laptop" selected=(asset && asset.asset_type === 'Laptop')) Laptop
+          option(value="Mobile Phone" selected=(asset && asset.asset_type === 'Mobile Phone')) Mobile Phone
+          option(value="Drill Machine" selected=(asset && asset.asset_type === 'Drill Machine')) Drill Machine
+          option(value="Screw Driver" selected=(asset && asset.asset_type === 'Screw Driver')) Screw Driver
+      .mb-3
+        label.form-label Purchase Date
+        input.form-control(type="date" name="purchase_date" value=asset ? asset.purchase_date : '')
+      .mb-3
+        label.form-label Purchase Cost
+        input.form-control(type="number" step="0.01" name="purchase_price" value=asset ? asset.purchase_price : '')
+      .mb-3
+        label.form-label Status
+        select.form-select(name="status" required)
+          option(value="Available" selected=(!asset || asset.status === 'Available')) Available
+          option(value="Issued" selected=(asset && asset.status === 'Issued')) Issued
+          option(value="Scraped" selected=(asset && asset.status === 'Scraped')) Scraped
+      button.btn.btn-primary(type="submit")(style='margin: 2px;') Save
+      a.btn.btn-secondary.ms-2(href="/asset")(style='margin: 2px;') Cancel

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  .container.mt-4
+    if message
+      .alert.alert-dismissible.fade.show(
+        class=message.type === 'success' ? 'alert-success' : 'alert-danger',
+        role='alert'
+      )
+        strong= message.type === 'success' ? 'Success! ' : 'Error! '
+        | #{message.text}
+        button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
+    h1 Scrap Asset
+    form(method="post", action="/scrap/new")
+      .mb-3
+        label.form-label(for="asset_id") Select Asset
+        select.form-select(name="asset_id", required)
+          option(value="") -- Select Asset --
+          each asset in assets
+            option(value=asset.id)= asset.serial_number + ' - ' + asset.make + ' ' + asset.model
+      .mb-3
+        label.form-label(for="scrap_reason") Scrap Reason
+        input.form-control(type="text", name="scrap_reason", required)
+      .mb-3
+        label.form-label(for="notes") Notes (optional)
+        textarea.form-control(name="notes")
+      button.btn.btn-danger(type="submit") Scrap Asset

@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .container.mt-4
+    h1 Asset Categories      
+    a.btn.btn-success.mb-3(href='/assetcategory/add') Add New
+
+    table#employeeTable.table.table-striped.table-bordered
+
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th S No.
+          th Name
+          th Description
+          th Actions
+      tbody
+        if assetcategories.length
+          each item,index in assetcategories
+            tr
+              td= index + 1
+              td= item.name
+              td= item.description
+              td
+                a.btn.btn-primary.btn-sm(href="/assetcategory/edit/" + item.id)(style='margin: 2px;') Edit
+                 a.btn.btn-danger.btn-sm(href='/assetcategory/delete/' + item.id, onclick='return confirm("Are you sure?")')(style='margin: 2px;') Delete
+                
+        else
+          tr
+            td(colspan="4") No asset categories found.

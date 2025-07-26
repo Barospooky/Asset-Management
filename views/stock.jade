@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .container.mt-4
+    h2 Stock View - Available Assets
+
+    table.table.table-bordered
+      thead
+        tr
+          th S No.
+          th Make
+          th Model
+          th Price
+      tbody
+        each asset, index in assets
+          tr
+            td= index + 1
+            td= asset.make
+            td= asset.model
+            td ₹#{asset.purchase_price}
+
+      tfoot
+        tr
+          td(colspan="3").text-end 
+            strong Total Value
+          td 
+            strong ₹#{totalValue.toFixed(2)}
+
+    hr
+    h4.text-end.text-primary Grand Total Value: ₹#{totalValue.toFixed(2)}

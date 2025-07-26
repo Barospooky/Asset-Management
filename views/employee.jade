@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  
+
+  .container.mt-4
+  
+    h1 Employee List
+
+    form.mb-4(method='GET', action='/employee')
+      .row
+        .col-md-4      
+          input.form-control(type='text', name='search', placeholder='Search by name', value=searchText)
+        .col-md-4
+          select.form-select(name='status')
+            option(value='all', selected=selectedStatus === 'all') All
+            option(value='active', selected=selectedStatus === 'active') Active
+            option(value='inactive', selected=selectedStatus === 'inactive') Inactive
+        .col-md-4
+          button.btn.btn-primary.mt-0(type="submit") Apply Filters
+        .col-md-4
+          a.btn.btn-success.mb-0.mt-3(href='/employee/add') Add New
+
+    table#employeeTable.table.table-striped.table-bordered(style='padding-top: 8px!important;')
+      thead
+        tr
+          th(style='width: 5%; white-space: nowrap') S No.
+          th(style='width: 15%; white-space: nowrap') Name
+          th(style='width: 20%; white-space: nowrap') Email
+          th(style='width: 10%; white-space: nowrap') Status
+          th(style='width: 10%; white-space: nowrap') Join Date
+          th(style='width: 10%; white-space: nowrap') Leave Date
+          th(style='width: 15%; white-space: nowrap') Action
+      tbody
+         each emp, index in employees
+          tr
+            td= index + 1 
+            td= emp.name
+            td= emp.email
+            td= emp.status
+            td= emp.join_date ? new Date(emp.join_date).toLocaleDateString('en-GB') : ''
+            td= emp.leave_date ? new Date(emp.leave_date).toLocaleDateString('en-GB') : ''
+            td
+              a.btn.btn-primary.btn-sm(href='/employee/edit/' + emp.id)(style='margin: 2px;') Edit
+              a.btn.btn-danger.btn-sm(href='/employee/delete/' + emp.id, onclick='return confirm("Are you sure?")')(style='margin: 2px;') Delete
+
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+  script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function () {
+      $('#employeeTable').DataTable({
+        searching: false,
+        autoWidth: false
+      });
+    });
