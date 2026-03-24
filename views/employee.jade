@@ -41,8 +41,8 @@ block content
             td= emp.join_date ? new Date(emp.join_date).toLocaleDateString('en-GB') : ''
             td= emp.leave_date ? new Date(emp.leave_date).toLocaleDateString('en-GB') : ''
             td
-              a.btn.btn-primary.btn-sm(href='/employee/edit/' + emp.id)(style='margin: 2px;') Edit
-              a.btn.btn-danger.btn-sm(href='/employee/delete/' + emp.id, onclick='return confirm("Are you sure?")')(style='margin: 2px;') Delete
+              a.btn.btn-primary.btn-sm(href='/employee/edit/' + emp.id, style='margin: 2px;') Edit
+              a.btn.btn-danger.btn-sm(href='/employee/delete/' + emp.id, onclick='return confirm("Are you sure?")', style='margin: 2px;') Delete
 
   script(src='https://code.jquery.com/jquery-3.6.0.min.js')
   script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')

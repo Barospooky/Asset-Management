@@ -34,5 +34,5 @@ block content
           option(value="Available" selected=(!asset || asset.status === 'Available')) Available
           option(value="Issued" selected=(asset && asset.status === 'Issued')) Issued
           option(value="Scraped" selected=(asset && asset.status === 'Scraped')) Scraped
-      button.btn.btn-primary(type="submit")(style='margin: 2px;') Save
-      a.btn.btn-secondary.ms-2(href="/asset")(style='margin: 2px;') Cancel
+      button.btn.btn-primary(type="submit", style='margin: 2px;') Save
+      a.btn.btn-secondary.ms-2(href="/asset", style='margin: 2px;') Cancel

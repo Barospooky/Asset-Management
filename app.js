@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+require('dotenv').config();
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +44,8 @@ app.get('/', (req, res) => res.redirect('/employee'));
 
 sequelize.authenticate().then(() => {
   console.log('DB connected');
-  app.listen(4000, () => console.log('Server running on http://localhost:4000'));
+  const port = process.env.PORT || 4000;
+  app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
 }).catch(err => {
   console.error('DB connection failed:', err);
 });
