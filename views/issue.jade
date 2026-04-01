@@ -1,48 +1,51 @@
 extends layout
 
 block content
-  .container.mt-4
-    if message
-      .alert.alert-dismissible.fade.show(
-        class=message.type === 'success' ? 'alert-success' : 'alert-danger',
-        role='alert'
-      )
-        strong= message.type === 'success' ? 'Success! ' : 'Error! '
-        | #{message.text}
-        button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
+  .page-header
+    div
+      h1.page-title Issue Asset
+      p.page-subtitle Capture a complete asset handover with employee, category, date, and purpose validation before the status changes.
 
-    h2.mb-4 Issue Asset
-
-    form(action='/issue/new' method='post')
-      .mb-3
-        label.form-label(for='employee_id') Employee
-        select.form-select(name='employee_id' required)
-          option(value='') -- Select Employee --
-          each emp in employees
-            option(value=emp.id)= emp.name
-
-      .mb-3
-        label.form-label(for='asset_category_id') Asset Category
-        select.form-select(name='asset_category_id' required)
-          option(value='') -- Select Category --
-          each c in categories
-            option(value= c.id)= c.name
-
-      .mb-3
-        label.form-label(for='asset_id') Asset
-        select.form-select(name='asset_id' required)
-          option(value='') -- Select Asset --
-          each a in availableAssets
-            option(value=a.id)= `${a.serial_number} - ${a.make} ${a.model}`
-
-      .mb-3
-        label.form-label(for='issue_date') Issue Date
-        input.form-control(type='date', name='issue_date', value=issueDate)
-
-      .mb-3
-        label.form-label(for='remarks') Remarks / Purpose
-        textarea.form-control(name='remarks', rows='3')
-
-      button.btn.btn-primary(type='submit') Issue Asset
+  .panel
+    if errors.form
+      .alert.alert-danger= errors.form
+    form(action='/issue/new', method='post', novalidate)
+      .row.g-3
+        .col-md-6
+          label.form-label(for='employee_id') Employee
+          select#employee_id.form-select(class=errors.employee_id ? 'is-invalid' : '', name='employee_id', required)
+            option(value='') -- Select Employee --
+            each emp in employees
+              option(value=emp.id, selected=String(formData.employee_id || '') === String(emp.id))= emp.name
+          if errors.employee_id
+            .invalid-feedback.d-block= errors.employee_id
+        .col-md-6
+          label.form-label(for='asset_category_id') Asset Category
+          select#asset_category_id.form-select(class=errors.asset_category_id ? 'is-invalid' : '', name='asset_category_id', required)
+            option(value='') -- Select Category --
+            each c in categories
+              option(value=c.id, selected=String(formData.asset_category_id || '') === String(c.id))= c.name
+          if errors.asset_category_id
+            .invalid-feedback.d-block= errors.asset_category_id
+        .col-md-6
+          label.form-label(for='asset_id') Asset
+          select#asset_id.form-select(class=errors.asset_id ? 'is-invalid' : '', name='asset_id', required)
+            option(value='') -- Select Asset --
+            each a in availableAssets
+              option(value=a.id, selected=String(formData.asset_id || '') === String(a.id))= `${a.serial_number} - ${a.make} ${a.model}`
+          if errors.asset_id
+            .invalid-feedback.d-block= errors.asset_id
+        .col-md-6
+          label.form-label(for='issue_date') Issue Date
+          input#issue_date.form-control(class=errors.issue_date ? 'is-invalid' : '', type='date', name='issue_date', value=formData.issue_date || issueDate)
+          if errors.issue_date
+            .invalid-feedback.d-block= errors.issue_date
+        .col-12
+          label.form-label(for='remarks') Remarks / Purpose
+          textarea#remarks.form-control(class=errors.remarks ? 'is-invalid' : '', name='remarks', rows='4')= formData.remarks || ''
+          if errors.remarks
+            .invalid-feedback.d-block= errors.remarks
+      .action-cluster.mt-4
+        button.btn.btn-primary(type='submit') Issue Asset
 
 

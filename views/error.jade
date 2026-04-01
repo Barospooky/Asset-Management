@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  .panel
+    h1.page-title= title || 'Something went wrong'
+    p.page-subtitle= message || 'The request could not be completed.'
+    a.btn.btn-primary.mt-3(href='/') Return to dashboard

@@ -1,27 +1,34 @@
 extends layout
 
 block content
-  .container.mt-4
-    if message
-      .alert.alert-dismissible.fade.show(
-        class=message.type === 'success' ? 'alert-success' : 'alert-danger',
-        role='alert'
-      )
-        strong= message.type === 'success' ? 'Success! ' : 'Error! '
-        | #{message.text}
-        button.btn-close(type='button', data-bs-dismiss='alert', aria-label='Close')
-    h1 Scrap Asset
-    form(method="post", action="/scrap/new")
-      .mb-3
-        label.form-label(for="asset_id") Select Asset
-        select.form-select(name="asset_id", required)
-          option(value="") -- Select Asset --
-          each asset in assets
-            option(value=asset.id)= asset.serial_number + ' - ' + asset.make + ' ' + asset.model
-      .mb-3
-        label.form-label(for="scrap_reason") Scrap Reason
-        input.form-control(type="text", name="scrap_reason", required)
-      .mb-3
-        label.form-label(for="notes") Notes (optional)
-        textarea.form-control(name="notes")
-      button.btn.btn-danger(type="submit") Scrap Asset
+  .page-header
+    div
+      h1.page-title Scrap Asset
+      p.page-subtitle Require a clear reason before moving an available asset out of circulation and into the audit trail.
+
+  .panel
+    form(method='post', action='/scrap/new', novalidate)
+      .row.g-3
+        .col-md-6
+          label.form-label(for='asset_id') Select Asset
+          select#asset_id.form-select(class=errors.asset_id ? 'is-invalid' : '', name='asset_id', required)
+            option(value='') -- Select Asset --
+            each asset in assets
+              option(value=asset.id, selected=String(formData.asset_id || '') === String(asset.id))= asset.serial_number + ' - ' + asset.make + ' ' + asset.model
+          if errors.asset_id
+            .invalid-feedback.d-block= errors.asset_id
+        .col-md-6
+          label.form-label(for='scrap_reason') Scrap Reason
+          input#scrap_reason.form-control(class=errors.scrap_reason ? 'is-invalid' : '', type='text', name='scrap_reason', value=formData.scrap_reason || '', required)
+          if errors.scrap_reason
+            .invalid-feedback.d-block= errors.scrap_reason
+        .col-12
+          label.form-label(for='notes') Notes
+          textarea#notes.form-control(class=errors.notes ? 'is-invalid' : '', name='notes', rows='4')= formData.notes || ''
+          if errors.notes
+            .invalid-feedback.d-block= errors.notes
+        if errors.form
+          .col-12
+            .alert.alert-danger.mb-0= errors.form
+      .action-cluster.mt-4
+        button.btn.btn-danger(type='submit') Scrap Asset

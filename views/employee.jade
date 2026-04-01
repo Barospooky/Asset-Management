@@ -1,51 +1,61 @@
 extends layout
 
 block content
-  
+  .page-header
+    div
+      h1.page-title Employee Directory
+      p.page-subtitle Manage active and inactive team members with clean records, searchable lists, and stronger validation.
+    .action-cluster
+      a.btn.btn-success(href='/employee/add')
+        i.bi.bi-person-plus-fill.me-2
+        | Add Employee
 
-  .container.mt-4
-  
-    h1 Employee List
-
-    form.mb-4(method='GET', action='/employee')
-      .row
-        .col-md-4      
-          input.form-control(type='text', name='search', placeholder='Search by name', value=searchText)
-        .col-md-4
-          select.form-select(name='status')
-            option(value='all', selected=selectedStatus === 'all') All
+  .panel
+    form(method='GET', action='/employee')
+      .row.g-3
+        .col-lg-5
+          label.form-label(for='search') Search by name
+          input#search.form-control(type='text', name='search', placeholder='Search employees', value=searchText)
+        .col-lg-3
+          label.form-label(for='status') Filter by status
+          select#status.form-select(name='status')
+            option(value='all', selected=selectedStatus === 'all') All employees
             option(value='active', selected=selectedStatus === 'active') Active
             option(value='inactive', selected=selectedStatus === 'inactive') Inactive
-        .col-md-4
-          button.btn.btn-primary.mt-0(type="submit") Apply Filters
-        .col-md-4
-          a.btn.btn-success.mb-0.mt-3(href='/employee/add') Add New
+        .col-lg-4.d-flex.align-items-end
+          .action-cluster
+            button.btn.btn-primary(type='submit') Apply Filters
+            a.btn.btn-secondary(href='/employee') Reset
 
-    table#employeeTable.table.table-striped.table-bordered(style='padding-top: 8px!important;')
-      thead
-        tr
-          th(style='width: 5%; white-space: nowrap') S No.
-          th(style='width: 15%; white-space: nowrap') Name
-          th(style='width: 20%; white-space: nowrap') Email
-          th(style='width: 10%; white-space: nowrap') Status
-          th(style='width: 10%; white-space: nowrap') Join Date
-          th(style='width: 10%; white-space: nowrap') Leave Date
-          th(style='width: 15%; white-space: nowrap') Action
-      tbody
-         each emp, index in employees
+  .panel
+    .table-shell
+      table#employeeTable.table.table-striped.table-bordered
+        thead
           tr
-            td= index + 1 
-            td= emp.name
-            td= emp.email
-            td= emp.status
-            td= emp.join_date ? new Date(emp.join_date).toLocaleDateString('en-GB') : ''
-            td= emp.leave_date ? new Date(emp.leave_date).toLocaleDateString('en-GB') : ''
-            td
-              a.btn.btn-primary.btn-sm(href='/employee/edit/' + emp.id, style='margin: 2px;') Edit
-              a.btn.btn-danger.btn-sm(href='/employee/delete/' + emp.id, onclick='return confirm("Are you sure?")', style='margin: 2px;') Delete
+            th S No.
+            th Name
+            th Email
+            th Status
+            th Join Date
+            th Leave Date
+            th Action
+        tbody
+          each emp, index in employees
+            - const employeeStatusClass = emp.status === 'active' ? 'status-active' : 'status-inactive';
+            tr
+              td= index + 1
+              td= emp.name
+              td= emp.email
+              td
+                span.badge-soft(class=employeeStatusClass)= emp.status
+              td= emp.join_date ? new Date(emp.join_date).toLocaleDateString('en-GB') : ''
+              td= emp.leave_date ? new Date(emp.leave_date).toLocaleDateString('en-GB') : ''
+              td
+                .action-cluster
+                  a.btn.btn-primary.btn-sm(href='/employee/edit/' + emp.id) Edit
+                  form.inline-form(action='/employee/delete/' + emp.id, method='POST', onsubmit='return confirm("Delete this employee?")')
+                    button.btn.btn-danger.btn-sm(type='submit') Delete
 
-  script(src='https://code.jquery.com/jquery-3.6.0.min.js')
-  script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
   script.
     $(document).ready(function () {
       $('#employeeTable').DataTable({

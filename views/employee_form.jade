@@ -1,31 +1,41 @@
 extends layout
 
 block content
-  .container
-    h2 #{action} Employee
+  .page-header
+    div
+      h1.page-title #{action} Employee
+      p.page-subtitle Capture clean identity and employment lifecycle data so issue and return flows stay reliable.
 
-    form(method='POST', action=(action === 'Add' ? '/employee/add' : '/employee/edit/' + employee.id))
-      .mb-3
-        label.form-label(for='name') Name
-        input.form-control(type='text', name='name', required, value=employee.name || '')
-      
-      .mb-3
-        label.form-label(for='email') Email
-        input.form-control(type='email', name='email', required, value=employee.email || '')
-      
-      .mb-3
-        label.form-label(for='status') Status
-        select.form-select(name='status')
-          option(value='active', selected=employee.status === 'active') active
-          option(value='inactive', selected=employee.status === 'inactive') inactive
-      
-      .mb-3
-        label.form-label(for='join_date') Join Date
-        input.form-control(type='date', name='join_date', placeholder='dd/mm/yyyy', value=(employee.join_date || ''))
-      
-      .mb-3
-        label.form-label(for='leave_date') Leave Date
-        input.form-control(type='date', name='leave_date', placeholder='dd/mm/yyyy', value=(employee.leave_date || ''))
-
-      button.btn.btn-success(type='submit', style='margin: 2px;') Save
-      a.btn.btn-secondary(href='/employee', style='margin: 2px;') Cancel
+  .panel
+    form(method='POST', action=(action === 'Add' ? '/employee/add' : '/employee/edit/' + employee.id), novalidate)
+      .row.g-3
+        .col-md-6
+          label.form-label(for='name') Name
+          input#name.form-control(class=errors.name ? 'is-invalid' : '', type='text', name='name', required, value=employee.name || '')
+          if errors.name
+            .invalid-feedback.d-block= errors.name
+        .col-md-6
+          label.form-label(for='email') Email
+          input#email.form-control(class=errors.email ? 'is-invalid' : '', type='email', name='email', required, value=employee.email || '')
+          if errors.email
+            .invalid-feedback.d-block= errors.email
+        .col-md-4
+          label.form-label(for='status') Status
+          select#status.form-select(class=errors.status ? 'is-invalid' : '', name='status')
+            each optionValue in statusOptions
+              option(value=optionValue, selected=((employee.status || 'active') === optionValue))= optionValue
+          if errors.status
+            .invalid-feedback.d-block= errors.status
+        .col-md-4
+          label.form-label(for='join_date') Join Date
+          input#join_date.form-control(class=errors.join_date ? 'is-invalid' : '', type='date', name='join_date', value=(employee.join_date || ''))
+          if errors.join_date
+            .invalid-feedback.d-block= errors.join_date
+        .col-md-4
+          label.form-label(for='leave_date') Leave Date
+          input#leave_date.form-control(class=errors.leave_date ? 'is-invalid' : '', type='date', name='leave_date', value=(employee.leave_date || ''))
+          if errors.leave_date
+            .invalid-feedback.d-block= errors.leave_date
+      .action-cluster.mt-4
+        button.btn.btn-success(type='submit') Save Employee
+        a.btn.btn-secondary(href='/employee') Cancel

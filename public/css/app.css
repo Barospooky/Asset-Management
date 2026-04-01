@@ -1,0 +1,358 @@
+:root {
+  --bg: #f4f7f4;
+  --surface: rgba(255, 255, 255, 0.9);
+  --text: #153133;
+  --muted: #5b7372;
+  --border: rgba(27, 77, 76, 0.12);
+  --brand: #166a6e;
+  --brand-dark: #124d50;
+  --accent: #ff8f3d;
+  --accent-soft: #ffe7d3;
+  --success-soft: #dff5eb;
+  --danger-soft: #fde4e1;
+  --shadow: 0 18px 50px rgba(20, 56, 56, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 143, 61, 0.18), transparent 26%),
+    radial-gradient(circle at top right, rgba(22, 106, 110, 0.16), transparent 28%),
+    linear-gradient(180deg, #f7fbfa 0%, var(--bg) 100%);
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.app-shell {
+  padding: 1.25rem;
+}
+
+.topbar {
+  backdrop-filter: blur(14px);
+  background: rgba(14, 53, 55, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(9, 32, 33, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.brand {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  gap: 0.9rem;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: linear-gradient(135deg, var(--accent), #ffb46b);
+  border-radius: 16px;
+  color: #1d3133;
+  display: inline-flex;
+  font-size: 1.25rem;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+.brand-text strong {
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.brand-text span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.82rem;
+}
+
+.nav-link {
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: 600;
+  padding: 0.7rem 1rem !important;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+}
+
+.user-pill {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  gap: 0.65rem;
+  padding: 0.65rem 0.95rem;
+}
+
+.user-pill small {
+  color: rgba(255, 255, 255, 0.72);
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.user-pill strong {
+  display: block;
+  font-size: 0.88rem;
+}
+
+.logout-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.page-header {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+  max-width: 54rem;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 1.4rem;
+}
+
+.panel + .panel {
+  margin-top: 1rem;
+}
+
+.action-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn {
+  border-radius: 14px;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-color: var(--brand);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #1a8a61, #116546);
+  border-color: #1a8a61;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dd5f51, #b73f31);
+  border-color: #dd5f51;
+}
+
+.btn-secondary {
+  background: #eef3f2;
+  border-color: #d4e0df;
+  color: var(--text);
+}
+
+.form-control,
+.form-select {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d5e4e2;
+  border-radius: 14px;
+  min-height: 48px;
+  padding: 0.75rem 0.95rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: rgba(22, 106, 110, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(22, 106, 110, 0.14);
+}
+
+.form-label {
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.table-shell {
+  overflow-x: auto;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table > :not(caption) > * > * {
+  border-bottom-color: rgba(19, 63, 63, 0.08);
+  padding: 0.9rem 0.85rem;
+  vertical-align: middle;
+}
+
+.table thead th {
+  background: rgba(22, 106, 110, 0.08);
+  color: var(--brand-dark);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-soft {
+  background: rgba(22, 106, 110, 0.1);
+  border-radius: 999px;
+  color: var(--brand-dark);
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.35rem 0.7rem;
+}
+
+.status-active,
+.status-available {
+  background: var(--success-soft);
+  color: #136147;
+}
+
+.status-inactive,
+.status-issued,
+.status-scraped {
+  background: var(--accent-soft);
+  color: #92480a;
+}
+
+.alert {
+  border: none;
+  border-radius: 18px;
+}
+
+.alert-success {
+  background: var(--success-soft);
+  color: #0f553d;
+}
+
+.alert-danger {
+  background: var(--danger-soft);
+  color: #7e2f25;
+}
+
+.inline-form {
+  display: inline-block;
+}
+
+.auth-shell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(22, 106, 110, 0.12);
+  border-radius: 30px;
+  box-shadow: 0 30px 80px rgba(11, 42, 43, 0.18);
+  max-width: 460px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.auth-eyebrow {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.auth-title {
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.auth-copy {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.auth-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: rgba(22, 106, 110, 0.1) !important;
+  border: 1px solid rgba(22, 106, 110, 0.2) !important;
+  border-radius: 10px;
+}
+
+@media (max-width: 992px) {
+  .app-shell {
+    padding: 0.85rem;
+  }
+
+  .topbar {
+    border-radius: 22px;
+  }
+
+  .user-pill {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .panel {
+    border-radius: 20px;
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.7rem;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+  }
+}

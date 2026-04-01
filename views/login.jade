@@ -1,0 +1,41 @@
+extends auth_layout
+
+block content
+  if errors.form
+    .alert.alert-danger= errors.form
+
+  form(method='POST', action='/auth/login', novalidate)
+    .mb-3
+      label.form-label(for='email') Email
+      input.form-control(
+        class=errors.email ? 'is-invalid' : '',
+        type='email',
+        name='email',
+        id='email',
+        placeholder='Enter admin email',
+        value=formData.email || '',
+        required
+      )
+      if errors.email
+        .invalid-feedback.d-block= errors.email
+    .mb-3
+      label.form-label(for='password') Password
+      input.form-control(
+        class=errors.password ? 'is-invalid' : '',
+        type='password',
+        name='password',
+        id='password',
+        placeholder='Enter password',
+        required
+      )
+      if errors.password
+        .invalid-feedback.d-block= errors.password
+    button.btn.btn-primary.w-100(type='submit') Sign in
+    p.auth-hint
+      | Configure 
+      code ADMIN_EMAIL
+      | , 
+      code ADMIN_PASSWORD
+      |  and 
+      code SESSION_SECRET
+      |  in your environment before production deployment.

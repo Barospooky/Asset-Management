@@ -1,18 +1,24 @@
 extends layout
 
 block content
-  .container.mt-4
-    h2 #{action} Asset Category
+  .page-header
+    div
+      h1.page-title #{action} Asset Category
+      p.page-subtitle Create a clean category library so asset records stay consistent across the entire platform.
 
-    form(method='post', action=(action === 'Edit' ? '/assetcategory/edit/' + category.id : '/assetcategory/add'))
-      .form-group
-        label(for='name') Name
-        input.form-control(type='text', name='name', required, value=category.name || '')
-
-      .form-group
-        label(for='description') Description
-        textarea.form-control(name='description') #{category.description || ''}
-
-    
-      button.btn.btn-primary(type='submit', style='margin: 2px;') #{action}
-      a.btn.btn-secondary(href='/assetcategory', style='margin: 2px;') Cancel
+  .panel
+    form(method='post', action=(action === 'Edit' ? '/assetcategory/edit/' + category.id : '/assetcategory/add'), novalidate)
+      .row.g-3
+        .col-md-6
+          label.form-label(for='name') Name
+          input#name.form-control(class=errors.name ? 'is-invalid' : '', type='text', name='name', required, value=category.name || '')
+          if errors.name
+            .invalid-feedback.d-block= errors.name
+        .col-md-12
+          label.form-label(for='description') Description
+          textarea#description.form-control(class=errors.description ? 'is-invalid' : '', name='description', rows='4')= category.description || ''
+          if errors.description
+            .invalid-feedback.d-block= errors.description
+      .action-cluster.mt-4
+        button.btn.btn-primary(type='submit') #{action} Category
+        a.btn.btn-secondary(href='/assetcategory') Cancel
