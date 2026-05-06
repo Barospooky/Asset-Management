@@ -5,7 +5,9 @@ const flash = require('connect-flash');
 const { requireLogin } = require('./middleware/auth');
 const { applySecurityHeaders, assignRequestLocals } = require('./middleware/security');
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const app = express();
 const sequelize = require('./db');
